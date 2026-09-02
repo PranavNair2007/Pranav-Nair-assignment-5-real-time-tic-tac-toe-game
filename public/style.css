@@ -1,0 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.status-bar {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 14px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-dot.online { background: #2ecc71; box-shadow: 0 0 8px #2ecc71; }
+.status-dot.offline { background: #e74c3c; box-shadow: 0 0 8px #e74c3c; }
+
+.players-count {
+  margin-left: auto;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- Login ---------- */
+h1 { font-size: 1.8rem; margin-bottom: 4px; color: #333; }
+.subtitle { color: #777; margin-bottom: 20px; font-size: 0.95rem; }
+
+#loginForm {
+  display: flex;
+  gap: 10px;
+}
+
+#usernameInput {
+  flex: 1;
+  padding: 12px 14px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+#usernameInput:focus { border-color: #764ba2; }
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+}
+button:hover { transform: translateY(-2px); opacity: 0.95; }
+button:active { transform: translateY(0); }
+
+.error-text {
+  color: #e74c3c;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  min-height: 20px;
+}
+
+.waiting-msg {
+  margin-top: 18px;
+  color: #764ba2;
+  font-weight: 600;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ---------- Game screen ---------- */
+.players-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.symbol {
+  font-size: 1.8rem;
+  font-weight: 800;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.symbol.x { background: #eaf1ff; color: #4a6cf7; }
+.symbol.o { background: #ffeef0; color: #f75a6c; }
+
+.player-info .name {
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: 600;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vs {
+  font-weight: 700;
+  color: #aaa;
+  padding: 0 10px;
+}
+
+.player-info.active .name { color: #764ba2; }
+.player-info.active .symbol { box-shadow: 0 0 0 3px currentColor; }
+
+.turn-indicator {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+  background: #f5f5f8;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  user-select: none;
+}
+.cell:hover { background: #ececf5; }
+.cell.x { color: #4a6cf7; }
+.cell.o { color: #f75a6c; }
+.cell.filled { cursor: not-allowed; }
+.cell.win-cell {
+  background: #d4f8e8;
+  animation: winPulse 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes winPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+.you-are {
+  margin-top: 18px;
+  font-size: 0.9rem;
+  color: #777;
+}
+#youAreSymbol { font-weight: 700; color: #764ba2; }
+
+/* ---------- History ---------- */
+.history-card h2 {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  color: #333;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.history-item {
+  background: #f7f7fb;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-item .winner-tag {
+  font-weight: 700;
+  color: #764ba2;
+}
+
+.empty-text {
+  color: #999;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ---------- Modal ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 18px;
+  padding: 36px 30px;
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+  animation: popIn 0.25s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.winner-emoji { font-size: 3rem; margin-bottom: 8px; }
+#winnerText { font-size: 1.4rem; margin-bottom: 6px; color: #333; }
+#winnerSubtext { color: #777; margin-bottom: 20px; font-size: 0.9rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 420px) {
+  .card { padding: 20px 16px; }
+  .cell { font-size: 1.9rem; }
+  #loginForm { flex-direction: column; }
+}

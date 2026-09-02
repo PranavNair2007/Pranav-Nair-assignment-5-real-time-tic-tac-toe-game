@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-Time Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="status-bar">
+    <span id="connectionStatus" class="status-dot offline"></span>
+    <span id="connectionText">Connecting...</span>
+    <span class="players-count">Players online: <strong id="playerCount">0</strong>/2</span>
+  </div>
+
+  <div class="container">
+
+    <!-- LOGIN SCREEN -->
+    <section id="loginScreen" class="card">
+      <h1>🎮 Tic Tac Toe</h1>
+      <p class="subtitle">Enter a username to join the game</p>
+      <form id="loginForm">
+        <input type="text" id="usernameInput" placeholder="Enter your username" maxlength="15" autocomplete="off" required />
+        <button type="submit">Join Game</button>
+      </form>
+      <p id="loginError" class="error-text"></p>
+
+      <div id="waitingMsg" class="waiting-msg hidden">
+        ⏳ Waiting for another player to join...
+      </div>
+    </section>
+
+    <!-- GAME SCREEN -->
+    <section id="gameScreen" class="card hidden">
+      <div class="players-panel">
+        <div class="player-info" id="playerXInfo">
+          <span class="symbol x">X</span>
+          <span class="name" id="playerXName">Waiting...</span>
+        </div>
+        <div class="vs">VS</div>
+        <div class="player-info" id="playerOInfo">
+          <span class="symbol o">O</span>
+          <span class="name" id="playerOName">Waiting...</span>
+        </div>
+      </div>
+
+      <div id="turnIndicator" class="turn-indicator">It's X's turn</div>
+
+      <div class="board" id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+      </div>
+
+      <p class="you-are">You are: <span id="youAreSymbol">-</span></p>
+    </section>
+
+    <!-- GAME HISTORY -->
+    <section class="card history-card">
+      <h2>📜 Recent Games</h2>
+      <div id="historyList" class="history-list">
+        <p class="empty-text">No games played yet.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- WINNER MODAL -->
+  <div id="winnerModal" class="modal hidden">
+    <div class="modal-content">
+      <div id="winnerEmoji" class="winner-emoji">🏆</div>
+      <h2 id="winnerText">Player wins!</h2>
+      <p id="winnerSubtext"></p>
+      <button id="playAgainBtn">Play Again</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
